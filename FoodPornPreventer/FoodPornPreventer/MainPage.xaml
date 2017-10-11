@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:FoodPornPreventer"
+             x:Class="FoodPornPreventer.MainPage"
+             x:Name="TweetListPage"
+             Title="Food Porn Preventer">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:ImageHeightConverter x:Key="imageHeightConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness" iOS="0,20,0,0" />
+    </ContentPage.Padding>
+    <StackLayout>
+        <ListView x:Name="TweetList" 
+                  ItemsSource="{Binding Source={x:Reference TweetListPage}, Path=TimelineEntities}"
+                  HasUnevenRows="True">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout>
+                            <!-- リツイート情報 -->
+                            <Label Text="{Binding RetweetMessage}" FontSize="10" />
+                            <StackLayout Orientation="Horizontal" Margin="2.5">
+                                <!-- ユーザーアイコン -->
+                                <Image Source="{Binding UserProfileImageUrl}" 
+                                       WidthRequest="50"
+                                       HeightRequest="50" />
+                                <StackLayout HorizontalOptions="FillAndExpand" Margin="6">
+                                    <!-- ユーザー名 -->
+                                    <Label Text="{Binding UserName}"
+                                           FontSize="14"
+                                           FontAttributes="Bold" />
+                                    <!-- 日時 -->
+                                    <Label Text="{Binding CreatedAt}" FontSize="14" />
+                                    <!-- ツイート -->
+                                    <StackLayout HorizontalOptions="FillAndExpand">
+                                        <!-- 本文 -->
+                                        <Label Text="{Binding TweetText}"  />
+                                        <!-- 画像（固定で4つ） -->
+                                        <ScrollView Orientation="Horizontal">
+                                            <StackLayout Orientation="Horizontal">
+                                                <Image Source="{Binding TweetImageUrls[0]}"
+                                                       HorizontalOptions="Start"
+                                                       HeightRequest="{Binding TweetImageUrls[0], Converter={StaticResource imageHeightConverter}}"/>
+                                                <Image Source="{Binding TweetImageUrls[1]}"
+                                                       HorizontalOptions="Start"
+                                                       HeightRequest="{Binding TweetImageUrls[1], Converter={StaticResource imageHeightConverter}}"/>
+                                                <Image Source="{Binding TweetImageUrls[2]}"
+                                                       HorizontalOptions="Start"
+                                                       HeightRequest="{Binding TweetImageUrls[2], Converter={StaticResource imageHeightConverter}}"/>
+                                                <Image Source="{Binding TweetImageUrls[3]}"
+                                                       HorizontalOptions="Start"
+                                                       HeightRequest="{Binding TweetImageUrls[3], Converter={StaticResource imageHeightConverter}}"/>
+                                            </StackLayout>
+                                        </ScrollView>
+                                    </StackLayout>
+                                </StackLayout>
+                            </StackLayout>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>
