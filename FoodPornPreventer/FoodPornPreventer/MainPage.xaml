@@ -42,18 +42,18 @@
                                         <!-- 画像（固定で4つ） -->
                                         <ScrollView Orientation="Horizontal">
                                             <StackLayout Orientation="Horizontal">
-                                                <Image Source="{Binding TweetImageUrls[0]}"
+                                                <Image Source="{Binding TweetImages[0].Url}"
                                                        HorizontalOptions="Start"
-                                                       HeightRequest="{Binding TweetImageUrls[0], Converter={StaticResource imageHeightConverter}}"/>
-                                                <Image Source="{Binding TweetImageUrls[1]}"
+                                                       HeightRequest="{Binding TweetImages[0], Converter={StaticResource imageHeightConverter}}"/>
+                                                <Image Source="{Binding TweetImages[1].Url}"
                                                        HorizontalOptions="Start"
-                                                       HeightRequest="{Binding TweetImageUrls[1], Converter={StaticResource imageHeightConverter}}"/>
-                                                <Image Source="{Binding TweetImageUrls[2]}"
+                                                       HeightRequest="{Binding TweetImages[1], Converter={StaticResource imageHeightConverter}}"/>
+                                                <Image Source="{Binding TweetImages[2].Url}"
                                                        HorizontalOptions="Start"
-                                                       HeightRequest="{Binding TweetImageUrls[2], Converter={StaticResource imageHeightConverter}}"/>
-                                                <Image Source="{Binding TweetImageUrls[3]}"
+                                                       HeightRequest="{Binding TweetImages[2], Converter={StaticResource imageHeightConverter}}"/>
+                                                <Image Source="{Binding TweetImages[3].Url}"
                                                        HorizontalOptions="Start"
-                                                       HeightRequest="{Binding TweetImageUrls[3], Converter={StaticResource imageHeightConverter}}"/>
+                                                       HeightRequest="{Binding TweetImages[3], Converter={StaticResource imageHeightConverter}}"/>
                                             </StackLayout>
                                         </ScrollView>
                                     </StackLayout>

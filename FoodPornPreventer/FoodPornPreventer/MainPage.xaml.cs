@@ -33,7 +33,7 @@ namespace FoodPornPreventer
         {
             try
             {
-                if (TimelineEntities.LastOrDefault() == e.Item as SimpleTimelineEntity)
+                if (TimelineEntities.Last() == e.Item as SimpleTimelineEntity)
                 {
                     await AddTweets(TimelineEntities.Last().Id);
                 }
@@ -52,7 +52,6 @@ namespace FoodPornPreventer
             }
             catch (Exception ex)
             {
-
             }
         }
 
@@ -90,22 +89,18 @@ namespace FoodPornPreventer
 
                 if (item.ExtendedEntities != null)
                 {
-                    var imageUrls = new List<string>();
+                    var tweetImages = new List<TweetImageInfo>();
                     foreach (var media in item.ExtendedEntities.Media)
                     {
-                        if (await IsFoodPornAsync(media.MediaUrl))
+                        tweetImages.Add(new TweetImageInfo
                         {
-                            // 飯テロ画像が含まれていた場合、「閲覧注意」の警告文に差し替え
-                            imageUrls.Add("");
-                        }
-                        else
-                        {
-                            imageUrls.Add(media.MediaUrl);
-                        }
+                            Url = media.MediaUrl,
+                            IsFoodPorn = await IsFoodPornAsync(media.MediaUrl)
+                        });
                     }
                     // Twitterの画像は最大4枚なので要素数は4固定
-                    timelineEntity.TweetImageUrls = new string[4];
-                    Array.Copy(imageUrls.ToArray(), timelineEntity.TweetImageUrls, imageUrls.Count());                    
+                    timelineEntity.TweetImages = new TweetImageInfo[4];
+                    Array.Copy(tweetImages.ToArray(), timelineEntity.TweetImages, tweetImages.Count());                  
                 }
                 TimelineEntities.Add(timelineEntity);
             }
