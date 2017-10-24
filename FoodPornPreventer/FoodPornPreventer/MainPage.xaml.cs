@@ -110,10 +110,8 @@ namespace FoodPornPreventer
         {
             // Computer Vision APIで解析してTagsを取得
             var vision = new VisionServiceClient(Secrets.VisionSubscriptionKey, Secrets.VisionApiRoot);
-            var result = await vision.GetTagsAsync(url);
-            return result.Tags.Any(t => t.Name == "food");
+            var result = await vision.AnalyzeImageAsync(url, (VisualFeature[])Enum.GetValues(typeof(VisualFeature)));
+            return result.Tags.Any(t => t.Hint == "food" || t.Name == "food");
         }
-
-        
     }
 }
