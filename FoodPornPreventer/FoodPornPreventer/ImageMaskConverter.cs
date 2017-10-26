@@ -12,11 +12,11 @@ namespace FoodPornPreventer
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            // 飯テロ画像なら画像を差し替え
             var imageInfo = value as TweetImageInfo;
 
             if (imageInfo == null) return null;
 
+            // 飯テロ画像なら画像を差し替え
             return imageInfo.IsFoodPorn
                 ? ImageSource.FromResource("FoodPornPreventer.Images.mark_chuui.png")
                 : ImageSource.FromUri(new Uri(imageInfo.Url));
