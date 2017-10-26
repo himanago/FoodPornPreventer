@@ -8,6 +8,7 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <local:ImageHeightConverter x:Key="imageHeightConverter" />
+            <local:ImageMaskConverter x:Key="imageMaskConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Padding>
@@ -42,16 +43,16 @@
                                         <!-- 画像（固定で4つ） -->
                                         <ScrollView Orientation="Horizontal">
                                             <StackLayout Orientation="Horizontal">
-                                                <Image Source="{Binding TweetImages[0].Url}"
+                                                <Image Source="{Binding TweetImages[0], Converter={StaticResource imageMaskConverter}}"
                                                        HorizontalOptions="Start"
                                                        HeightRequest="{Binding TweetImages[0], Converter={StaticResource imageHeightConverter}}"/>
-                                                <Image Source="{Binding TweetImages[1].Url}"
+                                                <Image Source="{Binding TweetImages[1], Converter={StaticResource imageMaskConverter}}"
                                                        HorizontalOptions="Start"
                                                        HeightRequest="{Binding TweetImages[1], Converter={StaticResource imageHeightConverter}}"/>
-                                                <Image Source="{Binding TweetImages[2].Url}"
+                                                <Image Source="{Binding TweetImages[2], Converter={StaticResource imageMaskConverter}}"
                                                        HorizontalOptions="Start"
                                                        HeightRequest="{Binding TweetImages[2], Converter={StaticResource imageHeightConverter}}"/>
-                                                <Image Source="{Binding TweetImages[3].Url}"
+                                                <Image Source="{Binding TweetImages[3], Converter={StaticResource imageMaskConverter}}"
                                                        HorizontalOptions="Start"
                                                        HeightRequest="{Binding TweetImages[3], Converter={StaticResource imageHeightConverter}}"/>
                                             </StackLayout>
