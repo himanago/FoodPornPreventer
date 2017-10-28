@@ -20,13 +20,11 @@ namespace FoodPornPreventer
         // 今回は事前にTwitterアカウントで作成しておいたアクセス情報を使用
         private Tokens Tokens { get; } = Tokens.Create(Secrets.ConsumerKey, Secrets.ConsumerSecret, Secrets.AccessToken, Secrets.AccessTokenSecret);
 
-        private const int TweetCount = 10;
+        private const int TweetCount = 50;
 
         public MainPage()
         {
             InitializeComponent();
-
-            TweetList.ItemAppearing += TweetList_ItemAppearing;
         }
 
         private async void TweetList_ItemAppearing(object sender, ItemVisibilityEventArgs e)
@@ -41,6 +39,8 @@ namespace FoodPornPreventer
         {
             // タイムラインの取得とリストビューへの表示
             await AddTweets(null);
+
+            TweetList.ItemAppearing += TweetList_ItemAppearing;
         }
 
         private async Task AddTweets(long? maxId = null)
@@ -95,9 +95,17 @@ namespace FoodPornPreventer
                     TimelineEntities.Add(timelineEntity);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                await DisplayAlert("警告", "ツイートの読み込みに失敗しました。", "閉じる");
+                if (ex.Message == "Rate limit exceeded")
+                {
+                    await System.Threading.Tasks.Task.Delay(1000);
+                    await AddTweets(maxId);
+                }
+                else
+                {
+                    await DisplayAlert("警告", "ツイートの読み込みに失敗しました。", "閉じる");
+                }
             }
         }
 
