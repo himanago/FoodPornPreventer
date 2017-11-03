@@ -86,7 +86,7 @@ namespace FoodPornPreventer
                             {
                                 Url = media.MediaUrl,
                                 IsFoodPorn = await IsFoodPornAsync(media.MediaUrl)
-                            });
+                        });
                         }
                         // Twitterの画像は最大4枚なので要素数は4固定
                         timelineEntity.TweetImages = new TweetImageInfo[4];
@@ -111,10 +111,18 @@ namespace FoodPornPreventer
 
         private async Task<bool> IsFoodPornAsync(string url)
         {
-            // Computer Vision APIで解析してTagsを取得
-            var vision = new VisionServiceClient(Secrets.VisionSubscriptionKey, Secrets.VisionApiRoot);
-            var result = await vision.AnalyzeImageAsync(url, (VisualFeature[])Enum.GetValues(typeof(VisualFeature)));
-            return result.Tags.Any(t => t.Hint == "food" || t.Name == "food");
+            try
+            {
+                // Computer Vision APIで解析してTagsを取得
+                var vision = new VisionServiceClient(Secrets.VisionSubscriptionKey, Secrets.VisionApiRoot);
+                VisualFeature[] features = { VisualFeature.Tags, VisualFeature.Categories, VisualFeature.Description };
+                var result = await vision.AnalyzeImageAsync(url, features.ToList());
+                return result.Tags.Any(t => t.Hint == "food" || t.Name == "food");
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
     }
 }
