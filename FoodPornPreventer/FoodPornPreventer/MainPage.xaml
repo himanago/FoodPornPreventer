@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:FoodPornPreventer"
              x:Class="FoodPornPreventer.MainPage"
              x:Name="TweetListPage"
-             Title="Food Porn Preventer">
+             Title="タイムライン">
     <ContentPage.Resources>
         <ResourceDictionary>
             <local:ImageHeightConverter x:Key="imageHeightConverter" />
